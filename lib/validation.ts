@@ -36,17 +36,21 @@ export const coffeeShopSchema = z.object({
   photoUrl: z.string().optional().or(z.literal("")),
 });
 
-const CODES = ["C1", "C2", "C3", "C4", "C5", "C6", "C7"] as const;
+const weight = z.coerce.number().int().min(0).max(100);
 
 export const weightsSchema = z
-  .object(Object.fromEntries(CODES.map((c) => [c, z.coerce.number().int().min(0).max(100)])) as Record<
-    (typeof CODES)[number],
-    z.ZodType<number>
-  >)
-  .refine(
-    (w) => CODES.reduce((sum, c) => sum + (w[c] ?? 0), 0) === 100,
-    { message: "Total bobot harus tepat 100%" }
-  );
+  .object({
+    C1: weight,
+    C2: weight,
+    C3: weight,
+    C4: weight,
+    C5: weight,
+    C6: weight,
+    C7: weight,
+  })
+  .refine((w) => w.C1 + w.C2 + w.C3 + w.C4 + w.C5 + w.C6 + w.C7 === 100, {
+    message: "Total bobot harus tepat 100%",
+  });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
