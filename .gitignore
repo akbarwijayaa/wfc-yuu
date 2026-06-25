@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Local working docs (brainstorms, plans) — not version controlled
 docs/
+
+# Prisma local SQLite database (migrations ARE tracked)
+/prisma/dev.db
+/prisma/dev.db-journal

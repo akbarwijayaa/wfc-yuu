@@ -1,0 +1,81 @@
+// SPK Coffee Shop (MFEP) — Prisma schema (SQLite for local dev)
+// Identifiers in English. Categorical data values (Rendah/Sedang/Tinggi, etc.)
+// are kept as in the source assignment data and drive the MFEP conversion table.
+// Enums modeled as String + validated by Zod (SQLite has no native enums).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  name            String
+  email           String           @unique
+  username        String           @unique
+  password        String
+  role            String           @default("visitor") // admin | visitor
+  createdAt       DateTime         @default(now())
+  preferences     Preference[]
+  recommendations Recommendation[]
+}
+
+model CoffeeShop {
+  id             Int                    @id @default(autoincrement())
+  name           String
+  address        String?
+  region         String?
+  wifiSpeed      Int // Mbps
+  powerOutlets   Int // number of outlets
+  avgPrice       Int // Rupiah
+  operatingHours Int // hours/day
+  noiseLevel     String // Rendah | Sedang | Tinggi
+  comfort        String // Kurang | Cukup | Nyaman
+  locationAccess String // Sulit | Sedang | Mudah
+  description    String?
+  photoUrl       String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  details        RecommendationDetail[]
+}
+
+model Criterion {
+  id            Int     @id @default(autoincrement())
+  code          String  @unique // C1..C7
+  name          String
+  description   String?
+  defaultWeight Int // percent integer (all codes sum to 100)
+  type          String // benefit | cost
+}
+
+model Preference {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weights   String // JSON percent map e.g. {"C1":20,...}
+  createdAt DateTime @default(now())
+}
+
+model Recommendation {
+  id        Int                    @id @default(autoincrement())
+  userId    Int
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weights   String // JSON percent map used for this run
+  note      String?
+  createdAt DateTime               @default(now())
+  details   RecommendationDetail[]
+}
+
+model RecommendationDetail {
+  id               Int            @id @default(autoincrement())
+  recommendationId Int
+  recommendation   Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+  coffeeShopId     Int
+  coffeeShop       CoffeeShop     @relation(fields: [coffeeShopId], references: [id])
+  totalWe          Float
+  rank             Int
+}
