@@ -3,8 +3,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
-import { weightsSchema } from "@/lib/validation";
-import { rankShops, type ShopFactors, type WeightMap } from "@/lib/mfep";
+import { CRITERIA_CODES, equalWeights, rankShops, type CriteriaCode, type ShopFactors } from "@/lib/mfep";
 
 export type RecoState = { error?: string };
 
@@ -38,11 +37,15 @@ export async function runRecommendationAction(_prev: RecoState, formData: FormDa
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const parsed = weightsSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Bobot tidak valid" };
-  }
-  const weights = parsed.data as unknown as WeightMap;
+  // Checklist input: which criteria matter to the user. Backend splits 100% evenly.
+  const selected = formData
+    .getAll("criteria")
+    .map(String)
+    .filter((c): c is CriteriaCode => (CRITERIA_CODES as string[]).includes(c));
+
+  if (selected.length === 0) return { error: "Pilih minimal satu kriteria." };
+
+  const weights = equalWeights(selected);
 
   const shops = await prisma.coffeeShop.findMany({ orderBy: { id: "asc" } });
   if (shops.length === 0) return { error: "Belum ada data coffee shop." };

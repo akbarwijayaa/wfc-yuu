@@ -1,8 +1,24 @@
 import { CRITERIA_CODES, evaluate } from "./rules";
-import type { FactorBreakdown, RankedShop, ShopFactors, WeightMap } from "./types";
+import type { CriteriaCode, FactorBreakdown, RankedShop, ShopFactors, WeightMap } from "./types";
 
 function round4(n: number): number {
   return Math.round(n * 10000) / 10000;
+}
+
+/**
+ * Distribute 100% equally across the selected criteria (integer percentages,
+ * largest-remainder so the total is exactly 100). Unselected criteria get 0.
+ * Used for the checklist-based preference UX — picking criteria, not numbers.
+ */
+export function equalWeights(selected: CriteriaCode[]): WeightMap {
+  const result = Object.fromEntries(CRITERIA_CODES.map((c) => [c, 0])) as WeightMap;
+  const chosen = CRITERIA_CODES.filter((c) => selected.includes(c)); // canonical order
+  const n = chosen.length;
+  if (n === 0) return result;
+  const base = Math.floor(100 / n);
+  let rem = 100 - base * n;
+  for (const c of chosen) result[c] = base + (rem-- > 0 ? 1 : 0);
+  return result;
 }
 
 /** Validate that the weight percentages sum to exactly 100. */

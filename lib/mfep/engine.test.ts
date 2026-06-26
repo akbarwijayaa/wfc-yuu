@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { rankShops, validateWeights } from "./engine";
+import { equalWeights, rankShops, validateWeights } from "./engine";
 import { DEFAULT_WEIGHTS, evaluate } from "./rules";
 import type { ShopFactors, WeightMap } from "./types";
 
@@ -41,6 +41,31 @@ describe("validateWeights", () => {
   it("rejects weights not summing to 100", () => {
     const bad = { ...DEFAULT_WEIGHTS, C1: 25 } as unknown as WeightMap;
     expect(validateWeights(bad).ok).toBe(false);
+  });
+});
+
+describe("equalWeights — checklist preference", () => {
+  const sum = (w: Record<string, number>) =>
+    Object.values(w).reduce((a, b) => a + b, 0);
+
+  it("splits 100% evenly across 4 selected criteria", () => {
+    const w = equalWeights(["C1", "C3", "C5", "C7"]);
+    expect(w).toMatchObject({ C1: 25, C3: 25, C5: 25, C7: 25, C2: 0, C4: 0, C6: 0 });
+    expect(sum(w)).toBe(100);
+  });
+
+  it("always sums to exactly 100 (largest remainder) for any count", () => {
+    expect(sum(equalWeights(["C1", "C2", "C3", "C4", "C5", "C6", "C7"]))).toBe(100);
+    expect(sum(equalWeights(["C1", "C2", "C3"]))).toBe(100);
+    expect(sum(equalWeights(["C4"]))).toBe(100);
+  });
+
+  it("gives a single selected criterion 100%", () => {
+    expect(equalWeights(["C3"]).C3).toBe(100);
+  });
+
+  it("returns all zeros when nothing is selected", () => {
+    expect(sum(equalWeights([]))).toBe(0);
   });
 });
 
