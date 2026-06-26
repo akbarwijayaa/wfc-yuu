@@ -8,20 +8,19 @@ export default async function RegisterPage() {
   if (session) redirect(session.role === "admin" ? "/admin" : "/dashboard");
 
   return (
-    <div className="mx-auto max-w-md">
-      <div className="rounded-2xl border border-slate-200 bg-white p-8">
-        <h1 className="text-2xl font-bold text-slate-800">Daftar sebagai Pengunjung</h1>
-        <p className="mt-1 mb-6 text-sm text-slate-500">
-          Buat akun untuk menyimpan preferensi & riwayat rekomendasi.
-        </p>
+    <div className="mx-auto max-w-sm py-8">
+      <p className="eyebrow">Daftar</p>
+      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Buat akun pengunjung</h1>
+      <p className="mt-2 text-sm text-ink-2">Simpan preferensi bobot &amp; riwayat rekomendasimu.</p>
+      <div className="mt-6 panel p-6">
         <RegisterForm />
-        <p className="mt-6 text-center text-sm text-slate-500">
-          Sudah punya akun?{" "}
-          <Link href="/login" className="font-medium text-amber-700 hover:underline">
-            Masuk
-          </Link>
-        </p>
       </div>
+      <p className="mt-4 text-center text-sm text-ink-2">
+        Sudah punya akun?{" "}
+        <Link href="/login" className="text-coffee hover:text-coffee-2">
+          Masuk
+        </Link>
+      </p>
     </div>
   );
 }

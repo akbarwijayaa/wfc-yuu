@@ -5,16 +5,17 @@ export default async function RekomendasiPage() {
   const criteria = await prisma.criterion.findMany({ orderBy: { code: "asc" } });
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-2xl space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Atur Preferensi Bobot</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Geser bobot tiap kriteria sesuai kebutuhanmu. Total harus tepat <strong>100%</strong>.
-          Kriteria harga &amp; kebisingan bersifat <em>cost</em> (semakin rendah semakin baik) — sudah
-          ditangani otomatis dalam perhitungan.
+        <p className="eyebrow">Rekomendasi</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Atur preferensi bobot</h1>
+        <p className="mt-2 text-sm leading-relaxed text-ink-2">
+          Geser bobot tiap kriteria sesuai kebutuhanmu — total harus tepat{" "}
+          <span className="font-mono text-ink">100%</span>. Kriteria harga &amp; kebisingan bersifat{" "}
+          <em>cost</em> (makin rendah makin baik), sudah ditangani otomatis.
         </p>
       </div>
-      <div className="rounded-2xl border border-slate-200 bg-white p-6">
+      <div className="panel p-6">
         <WeightsForm
           criteria={criteria.map((c) => ({
             code: c.code,

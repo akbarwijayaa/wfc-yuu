@@ -17,22 +17,23 @@ export function WeightsForm({ criteria }: { criteria: Crit[] }) {
 
   const set = (code: string, value: number) =>
     setWeights((w) => ({ ...w, [code]: Math.max(0, Math.min(100, value || 0)) }));
-
   const reset = () =>
     setWeights(Object.fromEntries(criteria.map((c) => [c.code, c.defaultWeight])));
 
   return (
     <form action={action} className="space-y-5">
       {state.error && (
-        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{state.error}</p>
+        <p className="rounded-md border border-red-900/50 bg-red-950/40 px-3 py-2 text-sm text-red-300">
+          {state.error}
+        </p>
       )}
 
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {criteria.map((c) => (
-          <div key={c.code} className="flex items-center gap-3">
-            <div className="w-52 shrink-0 text-sm">
-              <span className="font-semibold text-amber-800">{c.code}</span>{" "}
-              <span className="text-slate-600">{c.name}</span>
+          <div key={c.code} className="flex items-center gap-4">
+            <div className="w-48 shrink-0 text-sm">
+              <span className="badge mr-2">{c.code}</span>
+              <span className="text-ink-2">{c.name}</span>
             </div>
             <input
               type="range"
@@ -41,7 +42,7 @@ export function WeightsForm({ criteria }: { criteria: Crit[] }) {
               step={5}
               value={weights[c.code]}
               onChange={(e) => set(c.code, Number(e.target.value))}
-              className="flex-1 accent-amber-700"
+              className="h-1 flex-1 accent-coffee"
             />
             <input
               type="number"
@@ -50,30 +51,23 @@ export function WeightsForm({ criteria }: { criteria: Crit[] }) {
               max={100}
               value={weights[c.code]}
               onChange={(e) => set(c.code, Number(e.target.value))}
-              className="w-16 rounded border border-slate-300 px-2 py-1 text-right text-sm"
+              className="w-16 rounded-md border border-line bg-bg px-2 py-1 text-right font-mono text-sm text-ink tabular-nums outline-none focus:border-coffee"
             />
-            <span className="w-4 text-sm text-slate-400">%</span>
           </div>
         ))}
       </div>
 
-      <div className="flex items-center justify-between border-t border-slate-200 pt-3">
-        <span className={`text-sm font-semibold ${valid ? "text-green-700" : "text-red-600"}`}>
-          Total bobot: {total}% {valid ? "✓" : "(harus 100%)"}
+      <div className="flex items-center justify-between border-t border-line pt-4">
+        <span className="font-mono text-sm tabular-nums">
+          <span className="text-ink-3">total </span>
+          <span className={valid ? "text-coffee" : "text-red-400"}>{total}%</span>
         </span>
-        <button
-          type="button"
-          onClick={reset}
-          className="text-sm text-slate-500 hover:text-amber-800"
-        >
-          Reset default
+        <button type="button" onClick={reset} className="text-xs text-ink-3 transition-colors hover:text-ink">
+          reset default
         </button>
       </div>
 
-      <button
-        disabled={!valid || pending}
-        className="w-full rounded-lg bg-amber-700 py-2.5 font-semibold text-white hover:bg-amber-800 disabled:cursor-not-allowed disabled:opacity-50"
-      >
+      <button disabled={!valid || pending} className="btn-primary w-full">
         {pending ? "Menghitung…" : "Hitung Rekomendasi"}
       </button>
     </form>

@@ -4,12 +4,14 @@ import { useActionState } from "react";
 import { loginAction, registerAction, type AuthState } from "@/app/actions/auth";
 
 const initial: AuthState = {};
-const inputClass =
-  "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600";
 
 function ErrorMsg({ error }: { error?: string }) {
   if (!error) return null;
-  return <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>;
+  return (
+    <p className="rounded-md border border-red-900/50 bg-red-950/40 px-3 py-2 text-sm text-red-300">
+      {error}
+    </p>
+  );
 }
 
 export function LoginForm() {
@@ -18,17 +20,14 @@ export function LoginForm() {
     <form action={action} className="space-y-4">
       <ErrorMsg error={state.error} />
       <div>
-        <label className="mb-1 block text-sm font-medium">Username</label>
-        <input name="username" className={inputClass} placeholder="admin atau user" required />
+        <label className="label">Username</label>
+        <input name="username" className="input" placeholder="admin atau user" required />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium">Password</label>
-        <input name="password" type="password" className={inputClass} required />
+        <label className="label">Password</label>
+        <input name="password" type="password" className="input" placeholder="••••••••" required />
       </div>
-      <button
-        disabled={pending}
-        className="w-full rounded-lg bg-amber-700 py-2 font-semibold text-white hover:bg-amber-800 disabled:opacity-60"
-      >
+      <button disabled={pending} className="btn-primary w-full">
         {pending ? "Memproses…" : "Masuk"}
       </button>
     </form>
@@ -41,25 +40,22 @@ export function RegisterForm() {
     <form action={action} className="space-y-4">
       <ErrorMsg error={state.error} />
       <div>
-        <label className="mb-1 block text-sm font-medium">Nama lengkap</label>
-        <input name="name" className={inputClass} required />
+        <label className="label">Nama lengkap</label>
+        <input name="name" className="input" required />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium">Email</label>
-        <input name="email" type="email" className={inputClass} required />
+        <label className="label">Email</label>
+        <input name="email" type="email" className="input" required />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium">Username</label>
-        <input name="username" className={inputClass} required />
+        <label className="label">Username</label>
+        <input name="username" className="input" required />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium">Password</label>
-        <input name="password" type="password" className={inputClass} required minLength={6} />
+        <label className="label">Password</label>
+        <input name="password" type="password" className="input" required minLength={6} />
       </div>
-      <button
-        disabled={pending}
-        className="w-full rounded-lg bg-amber-700 py-2 font-semibold text-white hover:bg-amber-800 disabled:opacity-60"
-      >
+      <button disabled={pending} className="btn-primary w-full">
         {pending ? "Memproses…" : "Daftar"}
       </button>
     </form>
