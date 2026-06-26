@@ -51,7 +51,7 @@ export function WeightsForm({ criteria }: { criteria: Crit[] }) {
               max={100}
               value={weights[c.code]}
               onChange={(e) => set(c.code, Number(e.target.value))}
-              className="w-16 rounded-md border border-line bg-bg px-2 py-1 text-right font-mono text-sm text-ink tabular-nums outline-none focus:border-coffee"
+              className="input w-16 px-2 py-1.5 text-right font-mono tabular-nums"
             />
           </div>
         ))}
