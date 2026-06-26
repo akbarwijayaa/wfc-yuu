@@ -8,11 +8,11 @@ export default async function RekomendasiPage() {
     <div className="mx-auto max-w-2xl space-y-8">
       <div>
         <p className="eyebrow">Rekomendasi</p>
-        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Atur preferensi bobot</h1>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Atur preferensi</h1>
         <p className="mt-2 text-sm leading-relaxed text-ink-2">
-          Geser bobot tiap kriteria sesuai kebutuhanmu — total harus tepat{" "}
-          <span className="font-mono text-ink">100%</span>. Kriteria harga &amp; kebisingan bersifat{" "}
-          <em>cost</em> (makin rendah makin baik), sudah ditangani otomatis.
+          Tentukan seberapa penting tiap kriteria. Sistem menormalkan jadi bobot yang selalu pas{" "}
+          <span className="font-mono text-ink">100%</span> — jadi kamu tidak bisa salah. Kriteria harga
+          &amp; kebisingan bersifat <em>cost</em> (makin rendah makin baik), sudah ditangani otomatis.
         </p>
       </div>
       <div className="panel p-6">
