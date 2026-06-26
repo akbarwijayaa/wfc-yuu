@@ -45,7 +45,7 @@ export function CriteriaWeightsForm({ criteria }: { criteria: Crit[] }) {
                 onChange={(e) =>
                   setW((prev) => ({ ...prev, [c.code]: Math.max(0, Math.min(100, Number(e.target.value) || 0)) }))
                 }
-                className="w-20 rounded-md border border-line bg-bg px-2 py-1 text-right font-mono text-sm text-ink tabular-nums outline-none focus:border-coffee"
+                className="input w-20 px-2 py-1.5 text-right font-mono tabular-nums"
               />
               <span className="text-sm text-ink-3">%</span>
             </div>

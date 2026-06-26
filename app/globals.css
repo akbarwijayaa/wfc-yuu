@@ -6,19 +6,20 @@
 
   /* Surfaces — warm near-black (coffee-tinted) */
   --color-bg: #0a0908;
-  --color-panel: #131110;
-  --color-panel-2: #1a1613;
-  --color-line: #2a2421;
-  --color-line-2: #3a322d;
+  --color-panel: #16120f;
+  --color-panel-2: #1d1813;
+  --color-field: #221c16;
+  --color-line: #342c26;
+  --color-line-2: #4a3f36;
 
   /* Text */
-  --color-ink: #f4efe8;
-  --color-ink-2: #b3a99d;
-  --color-ink-3: #7c736a;
+  --color-ink: #f5f1ea;
+  --color-ink-2: #c6bcae;
+  --color-ink-3: #8f8478;
 
   /* Single accent — coffee/caramel */
-  --color-coffee: #c0875a;
-  --color-coffee-2: #d6a276;
+  --color-coffee: #cb8d5a;
+  --color-coffee-2: #ddaa78;
   --color-on-coffee: #1a1108;
 }
 
@@ -41,16 +42,17 @@ body {
     @apply inline-flex items-center justify-center rounded-md bg-coffee px-4 py-2 text-sm font-medium text-on-coffee transition-colors hover:bg-coffee-2 disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-md border border-line bg-transparent px-4 py-2 text-sm text-ink-2 transition-colors hover:border-line-2 hover:text-ink;
+    @apply inline-flex items-center justify-center rounded-md border border-line-2 bg-transparent px-4 py-2 text-sm text-ink-2 transition-colors hover:border-ink-3 hover:text-ink;
   }
+  /* Form fields — clearly distinct from panel: lighter fill + visible border */
   .input {
-    @apply w-full rounded-md border border-line bg-bg px-3 py-2 text-sm text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-coffee;
+    @apply w-full rounded-md border border-line-2 bg-field px-3 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-coffee focus:ring-2 focus:ring-coffee/25;
   }
   .label {
-    @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-3;
+    @apply mb-1.5 block text-xs font-medium text-ink-2;
   }
   .badge {
-    @apply inline-flex items-center rounded border border-line bg-bg px-1.5 py-0.5 font-mono text-[11px] text-ink-2;
+    @apply inline-flex items-center rounded border border-line-2 bg-field px-1.5 py-0.5 font-mono text-[11px] text-ink-2;
   }
   .eyebrow {
     @apply font-mono text-xs uppercase tracking-[0.2em] text-coffee;
