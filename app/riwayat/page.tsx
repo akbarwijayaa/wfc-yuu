@@ -14,33 +14,37 @@ export default async function RiwayatPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-slate-800">Riwayat Rekomendasi</h1>
+    <div className="space-y-8">
+      <div>
+        <p className="eyebrow">Riwayat</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Rekomendasi tersimpan</h1>
+      </div>
 
       {recs.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
-          Belum ada riwayat.{" "}
-          <Link href="/rekomendasi" className="font-medium text-amber-700 hover:underline">
+        <div className="panel p-10 text-center">
+          <p className="text-sm text-ink-2">Belum ada riwayat.</p>
+          <Link href="/rekomendasi" className="mt-4 inline-block btn-primary">
             Buat rekomendasi pertama
           </Link>
         </div>
       ) : (
-        <div className="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        <div className="panel divide-y divide-line">
           {recs.map((r) => (
             <Link
               key={r.id}
               href={`/rekomendasi/${r.id}`}
-              className="flex items-center justify-between px-5 py-4 hover:bg-slate-50"
+              className="flex items-center justify-between px-5 py-4 transition-colors hover:bg-panel-2"
             >
               <div>
-                <p className="font-medium text-slate-800">
-                  Teratas: {r.details[0]?.coffeeShop.name ?? "—"}
+                <p className="text-sm text-ink">
+                  <span className="text-ink-3">teratas · </span>
+                  {r.details[0]?.coffeeShop.name ?? "—"}
                 </p>
-                <p className="text-xs text-slate-400">
+                <p className="mt-0.5 font-mono text-xs text-ink-3">
                   {new Date(r.createdAt).toLocaleString("id-ID")}
                 </p>
               </div>
-              <span className="text-sm text-amber-700">Lihat →</span>
+              <span className="text-ink-3">→</span>
             </Link>
           ))}
         </div>

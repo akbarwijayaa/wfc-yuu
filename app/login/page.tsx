@@ -8,21 +8,21 @@ export default async function LoginPage() {
   if (session) redirect(session.role === "admin" ? "/admin" : "/dashboard");
 
   return (
-    <div className="mx-auto max-w-md">
-      <div className="rounded-2xl border border-slate-200 bg-white p-8">
-        <h1 className="text-2xl font-bold text-slate-800">Masuk</h1>
-        <p className="mt-1 mb-6 text-sm text-slate-500">
-          Demo: <code className="rounded bg-slate-100 px-1">admin / admin123</code> atau{" "}
-          <code className="rounded bg-slate-100 px-1">user / user123</code>
-        </p>
+    <div className="mx-auto max-w-sm py-8">
+      <p className="eyebrow">Masuk</p>
+      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Selamat datang kembali</h1>
+      <div className="mt-6 panel p-6">
         <LoginForm />
-        <p className="mt-6 text-center text-sm text-slate-500">
-          Belum punya akun?{" "}
-          <Link href="/register" className="font-medium text-amber-700 hover:underline">
-            Daftar
-          </Link>
-        </p>
       </div>
+      <p className="mt-4 rounded-md border border-line bg-panel px-3 py-2 font-mono text-xs text-ink-3">
+        demo · admin/admin123 · user/user123
+      </p>
+      <p className="mt-4 text-center text-sm text-ink-2">
+        Belum punya akun?{" "}
+        <Link href="/register" className="text-coffee hover:text-coffee-2">
+          Daftar
+        </Link>
+      </p>
     </div>
   );
 }

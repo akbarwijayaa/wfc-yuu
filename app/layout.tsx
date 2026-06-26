@@ -7,7 +7,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SPK Coffee Shop Yogyakarta (MFEP)",
+  title: "spk/coffee — Pemilihan Coffee Shop Yogyakarta (MFEP)",
   description:
     "Sistem Penunjang Keputusan pemilihan coffee shop di Yogyakarta berdasarkan preferensi pengunjung dengan metode MFEP.",
 };
@@ -15,11 +15,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-slate-50 font-sans text-slate-800">
+      <body className="flex min-h-full flex-col bg-bg font-sans text-ink">
         <Nav />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{children}</main>
-        <footer className="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-400">
-          SPK Pemilihan Coffee Shop di Yogyakarta — Metode MFEP
+        <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-10">{children}</main>
+        <footer className="border-t border-line">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-5 text-xs text-ink-3">
+            <span className="font-mono">spk/coffee</span>
+            <span>SPK Pemilihan Coffee Shop Yogyakarta · Metode MFEP</span>
+          </div>
         </footer>
       </body>
     </html>

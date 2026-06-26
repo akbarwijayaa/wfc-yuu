@@ -5,15 +5,16 @@ export default async function AdminKriteriaPage() {
   const criteria = await prisma.criterion.findMany({ orderBy: { code: "asc" } });
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-2xl space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Kelola Kriteria &amp; Bobot Default</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Bobot default dipakai sebagai nilai awal saat pengunjung membuka halaman rekomendasi. Total
-          harus 100%.
+        <p className="eyebrow">Admin · Kriteria</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Bobot default kriteria</h1>
+        <p className="mt-2 text-sm leading-relaxed text-ink-2">
+          Dipakai sebagai nilai awal saat pengunjung membuka halaman rekomendasi. Total harus{" "}
+          <span className="font-mono text-ink">100%</span>.
         </p>
       </div>
-      <div className="rounded-2xl border border-slate-200 bg-white p-6">
+      <div className="panel p-6">
         <CriteriaWeightsForm
           criteria={criteria.map((c) => ({
             code: c.code,

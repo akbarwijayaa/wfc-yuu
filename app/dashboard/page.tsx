@@ -10,45 +10,46 @@ export default async function DashboardPage() {
   const shops = await prisma.coffeeShop.findMany({ orderBy: { name: "asc" } });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Halo, {session.name} 👋</h1>
-        <p className="mt-1 text-sm text-slate-500">Mau cari coffee shop yang pas hari ini?</p>
+        <p className="eyebrow">Dashboard</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Halo, {session.name}</h1>
+        <p className="mt-1 text-sm text-ink-2">Mau cari coffee shop yang pas hari ini?</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Link
-          href="/rekomendasi"
-          className="rounded-2xl border border-amber-200 bg-amber-50 p-6 hover:bg-amber-100"
-        >
-          <h2 className="font-semibold text-amber-900">⚖️ Cari Rekomendasi</h2>
-          <p className="mt-1 text-sm text-amber-800/80">
-            Atur bobot preferensi dan dapatkan peringkat coffee shop.
-          </p>
+        <Link href="/rekomendasi" className="panel group p-6 transition-colors hover:border-line-2">
+          <p className="font-mono text-xs text-coffee">→ rekomendasi</p>
+          <h2 className="mt-3 text-sm font-medium text-ink">Cari Rekomendasi</h2>
+          <p className="mt-1 text-sm text-ink-2">Atur bobot preferensi dan dapatkan peringkat.</p>
         </Link>
-        <Link
-          href="/riwayat"
-          className="rounded-2xl border border-slate-200 bg-white p-6 hover:bg-slate-50"
-        >
-          <h2 className="font-semibold text-slate-800">🕑 Riwayat</h2>
-          <p className="mt-1 text-sm text-slate-500">Lihat rekomendasi yang pernah kamu buat.</p>
+        <Link href="/riwayat" className="panel group p-6 transition-colors hover:border-line-2">
+          <p className="font-mono text-xs text-ink-3">→ riwayat</p>
+          <h2 className="mt-3 text-sm font-medium text-ink">Riwayat</h2>
+          <p className="mt-1 text-sm text-ink-2">Rekomendasi yang pernah kamu buat.</p>
         </Link>
       </div>
 
       <div>
-        <h2 className="mb-3 text-lg font-semibold text-slate-800">Jelajahi Coffee Shop</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mb-4 text-xs font-medium uppercase tracking-wider text-ink-3">
+          Jelajahi Coffee Shop
+        </h2>
+        <div className="panel divide-y divide-line">
           {shops.map((s) => (
             <Link
               key={s.id}
               href={`/coffee/${s.id}`}
-              className="rounded-xl border border-slate-200 bg-white p-4 hover:border-amber-300 hover:shadow-sm"
+              className="flex items-center justify-between px-5 py-3.5 transition-colors hover:bg-panel-2"
             >
-              <p className="font-medium text-slate-800">{s.name}</p>
-              <p className="text-xs text-slate-400">{s.region}</p>
-              <p className="mt-2 text-xs text-slate-500">
-                WiFi {s.wifiSpeed} Mbps · Rp {s.avgPrice.toLocaleString("id-ID")}
-              </p>
+              <div className="min-w-0">
+                <p className="truncate text-sm text-ink">{s.name}</p>
+                <p className="text-xs text-ink-3">{s.region}</p>
+              </div>
+              <div className="flex shrink-0 items-center gap-4 font-mono text-xs text-ink-2 tabular-nums">
+                <span>{s.wifiSpeed} Mbps</span>
+                <span className="hidden sm:inline">Rp {s.avgPrice.toLocaleString("id-ID")}</span>
+                <span className="text-ink-3">→</span>
+              </div>
             </Link>
           ))}
         </div>

@@ -15,9 +15,12 @@ export default async function EditCoffeeShopPage({
   const action = updateShopAction.bind(null, shop.id);
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
-      <h1 className="text-2xl font-bold text-slate-800">Ubah Coffee Shop</h1>
-      <div className="rounded-2xl border border-slate-200 bg-white p-6">
+    <div className="mx-auto max-w-2xl space-y-8">
+      <div>
+        <p className="eyebrow">Admin · Coffee</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink">Ubah Coffee Shop</h1>
+      </div>
+      <div className="panel p-6">
         <CoffeeShopForm action={action} initial={shop} submitLabel="Simpan Perubahan" />
       </div>
     </div>
