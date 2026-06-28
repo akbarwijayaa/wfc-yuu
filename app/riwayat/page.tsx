@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
+import { formatWIB } from "@/lib/datetime";
 
 export default async function RiwayatPage() {
   const session = await getSession();
@@ -40,9 +41,7 @@ export default async function RiwayatPage() {
                   <span className="text-ink-3">teratas · </span>
                   {r.details[0]?.coffeeShop.name ?? "—"}
                 </p>
-                <p className="mt-0.5 font-mono text-xs text-ink-3">
-                  {new Date(r.createdAt).toLocaleString("id-ID")}
-                </p>
+                <p className="mt-0.5 font-mono text-xs text-ink-3">{formatWIB(r.createdAt)}</p>
               </div>
               <span className="text-ink-3">→</span>
             </Link>

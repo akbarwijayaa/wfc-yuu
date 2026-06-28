@@ -20,7 +20,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-10">{children}</main>
         <footer className="border-t border-line">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-5 text-xs text-ink-3">
-            <span className="font-mono">spk/coffee</span>
+            <div className="flex items-center gap-4">
+              <span className="font-mono">spk/coffee</span>
+              <a href="/docs" className="transition-colors hover:text-ink">
+                API Docs
+              </a>
+            </div>
             <span>SPK Pemilihan Coffee Shop Yogyakarta · Metode MFEP</span>
           </div>
         </footer>
