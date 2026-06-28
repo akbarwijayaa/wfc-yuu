@@ -12,6 +12,9 @@
 import { prisma } from "../lib/db";
 
 const APPLY = process.argv.includes("--apply");
+const REVERT = process.argv.includes("--revert"); // subtract 7h (undo a previous --apply)
+const SIGN = REVERT ? -1 : 1;
+const OP = REVERT ? "-" : "+";
 const fmt = new Intl.DateTimeFormat("id-ID", { timeZone: "Asia/Jakarta", dateStyle: "short", timeStyle: "medium" });
 
 async function main() {
@@ -23,28 +26,28 @@ async function main() {
     Recommendation: await prisma.recommendation.count(),
   };
 
-  console.log(`Mode: ${APPLY ? "APPLY (+7h)" : "DRY-RUN"}`);
+  console.log(`Mode: ${APPLY ? `APPLY (${OP}7h)` : "DRY-RUN"}${REVERT ? " [revert]" : ""}`);
   console.log("Rows affected:", counts);
-  console.log("Sample Recommendation.createdAt (current stored -> +7h):");
+  console.log(`Sample Recommendation.createdAt (current stored -> ${OP}7h):`);
   for (const r of sample) {
     const now = r.createdAt;
-    const shifted = new Date(now.getTime() + 7 * 3600 * 1000);
-    console.log(`  #${r.id}: ${now.toISOString()}  ->  ${shifted.toISOString()}  (WIB view now: ${fmt.format(now)})`);
+    const shifted = new Date(now.getTime() + SIGN * 7 * 3600 * 1000);
+    console.log(`  #${r.id}: ${now.toISOString()}  ->  ${shifted.toISOString()}  (WIB view of result: ${fmt.format(shifted)})`);
   }
 
   if (!APPLY) {
-    console.log("\nDry-run only. Re-run with --apply to write the change.");
+    console.log("\nDry-run only. Re-run with --apply (add --revert to subtract).");
     return;
   }
 
-  const INTERVAL = `interval '7 hours'`;
+  const INTERVAL = `${OP} interval '7 hours'`;
   await prisma.$transaction([
-    prisma.$executeRawUnsafe(`UPDATE "User" SET "createdAt" = "createdAt" + ${INTERVAL}`),
-    prisma.$executeRawUnsafe(`UPDATE "CoffeeShop" SET "createdAt" = "createdAt" + ${INTERVAL}, "updatedAt" = "updatedAt" + ${INTERVAL}`),
-    prisma.$executeRawUnsafe(`UPDATE "Preference" SET "createdAt" = "createdAt" + ${INTERVAL}`),
-    prisma.$executeRawUnsafe(`UPDATE "Recommendation" SET "createdAt" = "createdAt" + ${INTERVAL}`),
+    prisma.$executeRawUnsafe(`UPDATE "User" SET "createdAt" = "createdAt" ${INTERVAL}`),
+    prisma.$executeRawUnsafe(`UPDATE "CoffeeShop" SET "createdAt" = "createdAt" ${INTERVAL}, "updatedAt" = "updatedAt" ${INTERVAL}`),
+    prisma.$executeRawUnsafe(`UPDATE "Preference" SET "createdAt" = "createdAt" ${INTERVAL}`),
+    prisma.$executeRawUnsafe(`UPDATE "Recommendation" SET "createdAt" = "createdAt" ${INTERVAL}`),
   ]);
-  console.log("\n✓ Shifted all timestamps by +7 hours.");
+  console.log(`\n✓ Shifted all timestamps by ${OP}7 hours.`);
 }
 
 main()
