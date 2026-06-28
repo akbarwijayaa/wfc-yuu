@@ -40,8 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Local working docs (brainstorms, plans) — not version controlled
-docs/
+# Local working docs (brainstorms, plans) — not version controlled (root only)
+/docs/
 
 # Prisma local SQLite database (migrations ARE tracked)
 /prisma/dev.db
