@@ -40,8 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Local working docs (brainstorms, plans) — not version controlled (root only)
-/docs/
+# Local working docs — ignore everything in docs except out
+docs/*
+!docs/out/
+!docs/out/**
+
 
 # Prisma local SQLite database (migrations ARE tracked)
 /prisma/dev.db
